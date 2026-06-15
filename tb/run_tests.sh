@@ -13,5 +13,5 @@ if [ "$#" -eq 0 ]; then
   exit 1
 fi
 
-SIM=verilator WAVES=0 GUI=0 HDL_TOPLEVEL_LANG=verilog \
+SIM=verilator WAVES=1 GUI=0 HDL_TOPLEVEL_LANG=verilog \
   pytest $PYTEST_FLAGS "$@"
