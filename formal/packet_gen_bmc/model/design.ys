@@ -1,0 +1,9 @@
+# running in packet_gen_bmc/src/
+read_verilog -sv -formal packet_gen.sv
+read_verilog -sv -formal packet_gen_formal.sv
+prep -top packet_gen_formal
+
+hierarchy -smtcheck
+rename -witness
+write_jny -no-connections ../model/design.json
+write_rtlil ../model/design.il
