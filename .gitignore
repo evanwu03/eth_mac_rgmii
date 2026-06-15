@@ -220,3 +220,6 @@ __marimo__/
 
 # cocotb simulation builds
 sim_build/
+
+# Symbiyosys formal verification builds
+packet_gen_prove/
