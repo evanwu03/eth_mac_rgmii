@@ -15,36 +15,37 @@ NUM_FRAMES = 10
 
 async def setup_dut(dut):
     """Initialize DUT inputs and start clock."""
-    dut.ARESETN.value = 0
-    dut.M_AXIS_TREADY.value = 1
+    dut.i_reset_n.value = 0
+    dut.m_axis_tready.value = 1
 
 @cocotb.test()
 async def test_packet_gen_runs_until_last_frame(dut):
 
-    clk = dut.ACLK
-    rst = dut.ARESETN
+    clk = dut.i_clk
+    rst = dut.i_reset_n
 
     start_clock(clk, period_ns=CLK_PERIOD_NS)
 
     await setup_dut(dut)
     await reset_dut(clk, rst, active_low=True, cycles=2)
 
-    dut.M_AXIS_TREADY.value = 1
+    dut.m_axis_tready.value = 1
 
     frame_count = 0
     byte_count = 0
 
     while frame_count < NUM_FRAMES:
-        await RisingEdge(dut.ACLK)
+        await RisingEdge(dut.i_clk
+)
 
-        valid = int(dut.M_AXIS_TVALID.value)
-        ready = int(dut.M_AXIS_TREADY.value)
-        last = int(dut.M_AXIS_TLAST.value)
+        valid = int(dut.m_axis_tvalid.value)
+        ready = int(dut.m_axis_tready.value)
+        last = int(dut.m_axis_tlast.value)
 
         if valid and ready:
             dut._log.info(
                 f"frame={frame_count} byte={byte_count} "
-                f"data=0x{int(dut.M_AXIS_TDATA.value):02x} last={last}"
+                f"data=0x{int(dut.m_axis_tdata.value):02x} last={last}"
             )
 
             if last:
@@ -59,16 +60,16 @@ async def test_packet_gen_runs_until_last_frame(dut):
                 byte_count += 1
 
     # Give DUT one cycle to drop TVALID after final frame
-    await RisingEdge(dut.ACLK)
+    await RisingEdge(dut.i_clk)
     await ReadOnly()
 
-    assert int(dut.M_AXIS_TVALID.value) == 0, (
-        "M_AXIS_TVALID should deassert after NUM_FRAMES frames"
+    assert int(dut.m_axis_tvalid.value) == 0, (
+        "m_axis_tvalid should deassert after NUM_FRAMES frames"
     )
 
 
-    await RisingEdge(dut.ACLK)
-    await RisingEdge(dut.ACLK)
+    await RisingEdge(dut.i_clk)
+    await RisingEdge(dut.i_clk)
     dut._log.info("packet_gen completed 10 frames successfully")
 
 def test_packet_gen_runner():

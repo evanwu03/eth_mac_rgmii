@@ -6,13 +6,13 @@ module packet_gen_formal #(
         parameter int NUM_FRAMES = 10
 
 )(
-        input logic ACLK,
-        input logic ARESETN,
+        input logic i_clk,
+        input logic i_reset_n,
 
-        input  logic  M_AXIS_TREADY,
-        output logic [DATA_W-1:0] M_AXIS_TDATA,
-        output logic  M_AXIS_TVALID,
-        output logic M_AXIS_TLAST
+        input  logic  m_axis_tready,
+        output logic [DATA_W-1:0] m_axis_tdata,
+        output logic  m_axis_tvalid,
+        output logic m_axis_tlast
         
         // Rest of AXI stream signals are not used for current demo
 );
@@ -24,12 +24,12 @@ packet_gen #(
 )
 dut
 (
-    .ACLK(ACLK),
-    .ARESETN(ARESETN),
-    .M_AXIS_TREADY(M_AXIS_TREADY),
-    .M_AXIS_TDATA(M_AXIS_TDATA),
-    .M_AXIS_TVALID(M_AXIS_TVALID),
-    .M_AXIS_TLAST(M_AXIS_TLAST)
+    .i_clk(i_clk),
+    .i_reset_n(i_reset_n),
+    .m_axis_tready(m_axis_tready),
+    .m_axis_tdata(m_axis_tdata),
+    .m_axis_tvalid(m_axis_tvalid),
+    .m_axis_tlast(m_axis_tlast)
 );
 
 
@@ -38,7 +38,7 @@ dut
     reg f_past_valid;
 
     initial f_past_valid = 0;
-    always @(posedge ACLK) begin
+    always @(posedge i_clk) begin
         f_past_valid <= 1;
     end
 
@@ -46,7 +46,7 @@ dut
     // Reset constraint: On very first cycle assume that reset must be active
     always @(*) begin
         if (!f_past_valid) begin
-            assume(!ARESETN);
+            assume(!i_reset_n);
         end
     end
 
@@ -54,16 +54,16 @@ dut
 
 
     // f_past_valid can also be used to handle initial value checks
-    // Assertion is only checked for M_AXIS_TVALID only on clock cycles following first one
+    // Assertion is only checked for m_axis_tvalid only on clock cycles following first one
     // Verifies Rule 1 and Rule 4 according to https://zipcpu.com/blog/2021/08/28/axi-rules.html
-    always @(posedge ACLK) begin
-        if (!f_past_valid || $past(!ARESETN)) begin
+    always @(posedge i_clk) begin
+        if (!f_past_valid || $past(!i_reset_n)) begin
             if (f_past_valid)
-                assert(!M_AXIS_TVALID);
-        end else if ($past(M_AXIS_TVALID && !M_AXIS_TREADY)) begin
-            assert(M_AXIS_TVALID);
-            assert($stable(M_AXIS_TDATA));
-            assert($stable(M_AXIS_TLAST));
+                assert(!m_axis_tvalid);
+        end else if ($past(m_axis_tvalid && !m_axis_tready)) begin
+            assert(m_axis_tvalid);
+            assert($stable(m_axis_tdata));
+            assert($stable(m_axis_tlast));
         end
     end
 

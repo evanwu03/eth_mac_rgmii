@@ -16,13 +16,15 @@
         parameter int NUM_FRAMES = 10
 
     ) (
-        input logic ACLK,
-        input logic ARESETN,
+        input logic i_clk,
+        input logic i_reset_n,
 
-        input  logic  M_AXIS_TREADY,
-        output logic [DATA_W-1:0] M_AXIS_TDATA,
-        output logic  M_AXIS_TVALID,
-        output logic M_AXIS_TLAST
+
+        // AXI-Stream master interface
+        input  logic  m_axis_tready,
+        output logic [DATA_W-1:0] m_axis_tdata,
+        output logic  m_axis_tvalid,
+        output logic m_axis_tlast
         
         // Rest of AXI stream signals are not used for current demo
     );
@@ -50,15 +52,15 @@
 always_comb begin
     load_byte_count = byte_count;
 
-    if (!M_AXIS_TVALID) begin
+    if (!m_axis_tvalid) begin
         // Output register is empty. Load first byte.
         load_byte_count = '0;
     end
-    else if (M_AXIS_TVALID && M_AXIS_TREADY && M_AXIS_TLAST) begin
+    else if (m_axis_tvalid && m_axis_tready && m_axis_tlast) begin
         // Last byte was accepted. Next frame starts at byte 0.
         load_byte_count = '0;
     end
-    else if (M_AXIS_TVALID && M_AXIS_TREADY) begin
+    else if (m_axis_tvalid && m_axis_tready) begin
         // Current byte was accepted. Load next byte.
         load_byte_count = byte_count + 1'b1;
     end
@@ -94,44 +96,44 @@ end
 
 
     // Update TVALID & TLAST
-    always_ff @(posedge ACLK) begin
+    always_ff @(posedge i_clk) begin
         
-        if (!ARESETN) begin
+        if (!i_reset_n) begin
             
-            M_AXIS_TVALID <= 0;
+            m_axis_tvalid <= 0;
         end
-        else if (!M_AXIS_TVALID || M_AXIS_TREADY) begin
-            M_AXIS_TVALID <= next_valid;
+        else if (!m_axis_tvalid || m_axis_tready) begin
+            m_axis_tvalid <= next_valid;
         end
     end
 
     // Upadte data
-    always_ff @(posedge ACLK) begin
-        if(!ARESETN) begin
-            M_AXIS_TLAST  <= 0;
-            M_AXIS_TDATA <= '0;
+    always_ff @(posedge i_clk) begin
+        if(!i_reset_n) begin
+            m_axis_tlast  <= 0;
+            m_axis_tdata <= '0;
         end
-        else if (!M_AXIS_TVALID || M_AXIS_TREADY) begin
+        else if (!m_axis_tvalid || m_axis_tready) begin
 
-            M_AXIS_TDATA <= next_data;
+            m_axis_tdata <= next_data;
             // Frame is finished sending after 60 bytes are sent
-            M_AXIS_TLAST <= (load_byte_count == FRAME_LEN_BYTES -1);
+            m_axis_tlast <= (load_byte_count == FRAME_LEN_BYTES -1);
         
             if (!next_valid) begin
-                M_AXIS_TDATA <= '0;
+                m_axis_tdata <= '0;
             end
         end
     end
 
     // Frame and Byte counter logic
-    always_ff @(posedge ACLK) begin
-        if (!ARESETN) begin
+    always_ff @(posedge i_clk) begin
+        if (!i_reset_n) begin
             byte_count <= '0;
             frame_count <= '0;
         end
-        else if (M_AXIS_TVALID && M_AXIS_TREADY)
+        else if (m_axis_tvalid && m_axis_tready)
 
-            if (M_AXIS_TLAST) begin
+            if (m_axis_tlast) begin
                 byte_count <= '0;
 
                 // Count up to NUM_FRAMES and stop
@@ -146,21 +148,21 @@ end
 
 
     // IRule 2:  Frame counter and byte counter should update
-    // when M_AXIS_TVALID && M_AXIS_READY
+    // when m_axis_tvalid && M_AXIS_READY
     `ifdef FORMAL
         logic f_past_valid;
         initial f_past_valid = 1'b0;
 
-        always @(posedge ACLK) begin
+        always @(posedge i_clk) begin
             f_past_valid <= 1'b1;
         end
 
-        always @(posedge ACLK) begin
-            if (f_past_valid && $past(ARESETN) && ARESETN) begin
-                if (!$past(M_AXIS_TVALID && M_AXIS_TREADY))
+        always @(posedge i_clk) begin
+            if (f_past_valid && $past(i_reset_n) && i_reset_n) begin
+                if (!$past(m_axis_tvalid && m_axis_tready))
                     assert(byte_count == $past(byte_count));
 
-                if (!$past(M_AXIS_TVALID && M_AXIS_TREADY && M_AXIS_TLAST))
+                if (!$past(m_axis_tvalid && m_axis_tready && m_axis_tlast))
                     assert(frame_count == $past(frame_count));
             end
         end
