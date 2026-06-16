@@ -1,0 +1,26 @@
+
+[tasks]
+bmc
+cover
+prove
+
+[options]
+bmc: mode bmc
+cover: mode cover
+prove: mode prove
+depth 20
+
+[engines]
+smtbmc
+# abc pdr
+# aiger avy
+# aiger suprove
+
+[script]
+read_verilog -sv -formal axis_fifo.sv 
+read_verilog -sv -formal axis_fifo_formal.sv 
+prep -top axis_fifo_formal
+
+[files]
+../../rtl/axis_fifo.sv
+axis_fifo_formal.sv

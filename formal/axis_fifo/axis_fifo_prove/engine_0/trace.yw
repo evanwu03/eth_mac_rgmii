@@ -1,0 +1,53 @@
+{
+  "format": "Yosys Witness Trace",
+  "generator": "smtbmc",
+  "clocks": [
+    {"path": ["\\i_clk"], "edge": "posedge", "offset": 0}
+  ],
+  "signals": [
+    {"path": ["\\dut", "\\_witness_", "\\anyseq_auto_setundef_cc_550_execute_713"], "width": 1, "offset": 0, "init_only": false},
+    {"path": ["\\dut", "\\_witness_", "\\anyseq_auto_setundef_cc_550_execute_715"], "width": 6, "offset": 0, "init_only": false},
+    {"path": ["\\dut", "\\_witness_", "\\anyseq_auto_setundef_cc_550_execute_717"], "width": 8, "offset": 0, "init_only": false},
+    {"path": ["\\dut", "\\_witness_", "\\anyseq_auto_setundef_cc_550_execute_719"], "width": 1, "offset": 0, "init_only": false},
+    {"path": ["\\dut", "\\_witness_", "\\anyseq_auto_setundef_cc_550_execute_721"], "width": 6, "offset": 0, "init_only": false},
+    {"path": ["\\dut", "\\_witness_", "\\anyseq_auto_setundef_cc_550_execute_723"], "width": 8, "offset": 0, "init_only": false},
+    {"path": ["\\dut", "\\_witness_", "\\anyseq_auto_setundef_cc_550_execute_725"], "width": 1, "offset": 0, "init_only": false},
+    {"path": ["\\dut", "\\_witness_", "\\anyseq_auto_setundef_cc_550_execute_727"], "width": 6, "offset": 0, "init_only": false},
+    {"path": ["\\dut", "\\_witness_", "\\anyseq_auto_setundef_cc_550_execute_729"], "width": 8, "offset": 0, "init_only": false},
+    {"path": ["\\i_clk"], "width": 1, "offset": 0, "init_only": false},
+    {"path": ["\\i_reset_n"], "width": 1, "offset": 0, "init_only": false},
+    {"path": ["\\m_axis_tready"], "width": 1, "offset": 0, "init_only": false},
+    {"path": ["\\s_axis_tdata"], "width": 8, "offset": 0, "init_only": false},
+    {"path": ["\\s_axis_tlast"], "width": 1, "offset": 0, "init_only": false},
+    {"path": ["\\s_axis_tvalid"], "width": 1, "offset": 0, "init_only": false},
+    {"path": ["\\_witness_", "\\anyinit_procdff_546"], "width": 1, "offset": 0, "init_only": true},
+    {"path": ["\\_witness_", "\\anyinit_procdff_547"], "width": 1, "offset": 0, "init_only": true},
+    {"path": ["\\_witness_", "\\anyinit_procdff_548"], "width": 8, "offset": 0, "init_only": true},
+    {"path": ["\\_witness_", "\\anyinit_procdff_549"], "width": 1, "offset": 0, "init_only": true},
+    {"path": ["\\dut", "\\_witness_", "\\anyinit_procdff_552"], "width": 1, "offset": 0, "init_only": true},
+    {"path": ["\\dut", "\\_witness_", "\\anyinit_procdff_553"], "width": 1, "offset": 0, "init_only": true},
+    {"path": ["\\dut", "\\_witness_", "\\anyinit_procdff_554"], "width": 1, "offset": 0, "init_only": true},
+    {"path": ["\\dut", "\\f_first_addr"], "width": 7, "offset": 0, "init_only": true},
+    {"path": ["\\dut", "\\f_first_data"], "width": 8, "offset": 0, "init_only": true},
+    {"path": ["\\dut", "\\f_second_data"], "width": 8, "offset": 0, "init_only": true},
+    {"path": ["\\dut", "\\m_axis_tdata"], "width": 8, "offset": 0, "init_only": true},
+    {"path": ["\\dut", "\\m_axis_tlast"], "width": 1, "offset": 0, "init_only": true},
+    {"path": ["\\dut", "\\m_axis_tvalid"], "width": 1, "offset": 0, "init_only": true},
+    {"path": ["\\dut", "\\mem_tdata", "\\[0]"], "width": 8, "offset": 0, "init_only": true},
+    {"path": ["\\dut", "\\mem_tdata", "\\[32]"], "width": 8, "offset": 0, "init_only": true},
+    {"path": ["\\dut", "\\mem_tdata", "\\[33]"], "width": 8, "offset": 0, "init_only": true},
+    {"path": ["\\dut", "\\mem_tdata", "\\[63]"], "width": 8, "offset": 0, "init_only": true},
+    {"path": ["\\dut", "\\mem_tlast", "\\[0]"], "width": 1, "offset": 0, "init_only": true},
+    {"path": ["\\dut", "\\mem_tlast", "\\[32]"], "width": 1, "offset": 0, "init_only": true},
+    {"path": ["\\dut", "\\mem_tlast", "\\[33]"], "width": 1, "offset": 0, "init_only": true},
+    {"path": ["\\dut", "\\o_overflow"], "width": 1, "offset": 0, "init_only": true},
+    {"path": ["\\dut", "\\o_underflow"], "width": 1, "offset": 0, "init_only": true},
+    {"path": ["\\dut", "\\rd_addr"], "width": 7, "offset": 0, "init_only": true},
+    {"path": ["\\dut", "\\s_axis_tready"], "width": 1, "offset": 0, "init_only": true},
+    {"path": ["\\dut", "\\wr_addr"], "width": 7, "offset": 0, "init_only": true}
+  ],
+  "steps": [
+    {"bits": "0111111101000000000?10000000000000000000000010000000000000000000000000100000000111111000000000000001010000000000000000001000000000000001111110000000000000000"},
+    {"bits": "0000000000000000000000000000000000000000000000000000000000"}
+  ]
+}

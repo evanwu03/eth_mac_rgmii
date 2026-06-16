@@ -170,7 +170,7 @@ end
 // same two values in succession some time later
 //  
 // 
-/*
+
 logic [ADDR_W:0] f_fill;
 
 logic f_wr = s_axis_tvalid && s_axis_tready;
@@ -286,7 +286,7 @@ always @(*)
 
 		assert(m_axis_tdata == f_second_data);
 	end
-*/
+
 
 `endif 
 

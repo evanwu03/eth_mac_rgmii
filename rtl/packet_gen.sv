@@ -94,7 +94,7 @@ end
     end
 
 
-    // Update TVALID & TLAST
+    // Update TVALID
     always_ff @(posedge i_clk) begin
         
         if (!i_reset_n) begin
@@ -106,7 +106,7 @@ end
         end
     end
 
-    // Upadte data
+    // Update data
     always_ff @(posedge i_clk) begin
         if(!i_reset_n) begin
             m_axis_tlast  <= 0;
@@ -146,7 +146,7 @@ end
     end
 
 
-    // IRule 2:  Frame counter and byte counter should update
+    // Rule 2:  Frame counter and byte counter should update
     // when m_axis_tvalid && M_AXIS_READY
     `ifdef FORMAL
         logic f_past_valid;
