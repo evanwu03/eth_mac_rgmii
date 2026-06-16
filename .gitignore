@@ -224,3 +224,4 @@ sim_build/
 # Symbiyosys formal verification builds
 packet_gen_prove/
 packet_gen_bmc/
+packet_gen/
