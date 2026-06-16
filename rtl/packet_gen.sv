@@ -19,7 +19,6 @@
         input logic i_clk,
         input logic i_reset_n,
 
-
         // AXI-Stream master interface
         input  logic  m_axis_tready,
         output logic [DATA_W-1:0] m_axis_tdata,
