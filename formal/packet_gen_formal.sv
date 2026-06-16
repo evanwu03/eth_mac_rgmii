@@ -50,28 +50,21 @@ dut
         end
     end
 
+    
+
 
     // f_past_valid can also be used to handle initial value checks
     // Assertion is only checked for M_AXIS_TVALID only on clock cycles following first one
+    // Verifies Rule 1 and Rule 4 according to https://zipcpu.com/blog/2021/08/28/axi-rules.html
     always @(posedge ACLK) begin
         if (!f_past_valid || $past(!ARESETN)) begin
             if (f_past_valid)
                 assert(!M_AXIS_TVALID);
+        end else if ($past(M_AXIS_TVALID && !M_AXIS_TREADY)) begin
+            assert(M_AXIS_TVALID);
+            assert($stable(M_AXIS_TDATA));
+            assert($stable(M_AXIS_TLAST));
         end
     end
-
-    // Asynchronous reset check
-    /*
-    always @(posedge ACLK)
-        if (!ARESETN || $past(!ARESETN))
-        begin
-            assert(!M_AXIS_TVALID);
-    */
-
-
-    // Formal check of handshake itself
-
-
-
 
 endmodule

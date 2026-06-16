@@ -8,12 +8,11 @@ prove
 bmc: mode bmc
 cover: mode cover
 prove: mode prove
-
 depth 20
 
 [engines]
-smtbmc
-# abc pdr
+ smtbmc
+#abc pdr
 # aiger avy
 # aiger suprove
 

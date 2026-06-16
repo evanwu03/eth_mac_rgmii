@@ -1,5 +1,5 @@
     // Author: Evan Wu
-    // Date: 6/12/2026
+    // Date of Revision: 6/15/2026
 
     `timescale 1ns / 1ps
     `default_nettype none
@@ -105,7 +105,6 @@ end
         end
     end
 
-
     // Upadte data
     always_ff @(posedge ACLK) begin
         if(!ARESETN) begin
@@ -123,7 +122,6 @@ end
             end
         end
     end
-
 
     // Frame and Byte counter logic
     always_ff @(posedge ACLK) begin
@@ -146,5 +144,26 @@ end
             end
     end
 
+
+    // IRule 2:  Frame counter and byte counter should update
+    // when M_AXIS_TVALID && M_AXIS_READY
+    `ifdef FORMAL
+        logic f_past_valid;
+        initial f_past_valid = 1'b0;
+
+        always @(posedge ACLK) begin
+            f_past_valid <= 1'b1;
+        end
+
+        always @(posedge ACLK) begin
+            if (f_past_valid && $past(ARESETN) && ARESETN) begin
+                if (!$past(M_AXIS_TVALID && M_AXIS_TREADY))
+                    assert(byte_count == $past(byte_count));
+
+                if (!$past(M_AXIS_TVALID && M_AXIS_TREADY && M_AXIS_TLAST))
+                    assert(frame_count == $past(frame_count));
+            end
+        end
+    `endif
 
 endmodule : packet_gen
