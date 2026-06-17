@@ -1,9 +1,0 @@
-# running in axis_fifo_prove/src/
-read_verilog -sv -formal axis_fifo.sv
-read_verilog -sv -formal axis_fifo_formal.sv
-prep -top axis_fifo_formal
-
-hierarchy -smtcheck
-rename -witness
-write_jny -no-connections ../model/design.json
-write_rtlil ../model/design.il

@@ -44,8 +44,8 @@ dut
     .m_axis_tdata(m_axis_tdata),
     .m_axis_tready(m_axis_tready),
 
-    .o_overflow(o_overflow),
-    .o_underflow(o_underflow)
+    //.o_overflow(o_overflow),
+    //.o_underflow(o_underflow)
 );
 
 

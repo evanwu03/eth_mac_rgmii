@@ -1,6 +1,0 @@
-Elapsed clock time [H:MM:SS (secs)]: 0:00:00 (0)
-Elapsed process time [H:MM:SS (secs)]: 0:00:00 (0)
-engine_0 (smtbmc) returned FAIL for basecase
-counterexample trace [basecase]: engine_0/trace.vcd
-counterexample trace [basecase]: engine_0/trace.yw
-  failed assertion axis_fifo_formal.dut._witness_.check_assert_axis_fifo_sv_261_280 at axis_fifo.sv:261.3-261.35 step 1

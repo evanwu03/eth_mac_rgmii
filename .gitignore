@@ -225,3 +225,6 @@ sim_build/
 packet_gen_prove/
 packet_gen_bmc/
 packet_gen/
+formal/axis_fifo/axis_fifo
+formal/axis_fifo/axis_fifo_cover
+formal/axis_fifo/axis_fifo_prove
