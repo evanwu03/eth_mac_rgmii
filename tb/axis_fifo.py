@@ -231,8 +231,6 @@ def test_axis_fifo_runner():
         test_module="axis_fifo",
         parameters=parameters,
         build_dir="sim_build/axis_fifo",
-        testcase="test_push_to_full_fifo"
-        
     )
 
 if __name__ == "__main__":
