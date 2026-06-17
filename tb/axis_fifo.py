@@ -216,7 +216,7 @@ def test_axi_fifo_runner():
         test_module="axis_fifo",
         parameters=parameters,
         build_dir="sim_build/axis_fifo",
-        testcase="test_fill_fifo_until_full"
+        #testcase="test_fill_fifo_until_full"
         
     )
 

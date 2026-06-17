@@ -111,6 +111,7 @@ end
 // Read logic
 always_ff @(posedge i_clk) begin
     if (!i_reset_n) begin
+        rd_addr <= 1'b0;
         o_underflow <= 1'b0;
     end
     if (!m_axis_tvalid || m_axis_tready) begin
