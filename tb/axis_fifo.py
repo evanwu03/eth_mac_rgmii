@@ -1,13 +1,22 @@
 
 
 import os
+import sys
 from pathlib import Path
+
+
+# TB_DIR on path
+TB_DIR = Path(__file__).resolve().parent
+sys.path.insert(0, str(TB_DIR))
+
+
+from common.clock_reset import reset_dut
+from common.clock_reset import start_clock
+
 import cocotb
-from cocotb.triggers import RisingEdge, ReadOnly
+from cocotb.triggers import RisingEdge
 from cocotb_tools.runner import get_runner
 
-from clock_reset import reset_dut
-from clock_reset import start_clock
 
 CLK_PERIOD_NS = 10
 DATA_W = 8

@@ -1,2 +1,4 @@
 cocotb
+cocotbext-axi
+cocotbext-eth
 pytest
