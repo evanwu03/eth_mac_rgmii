@@ -38,6 +38,9 @@ class TB:
     def __init__(self, dut):
         self.dut = dut
 
+        self.log = logging.getLogger("cocotb")
+        self.log.setLevel(logging.DEBUG)
+
         cocotb.start_soon(Clock(dut.i_clk, 2, unit="ns").start())
 
         self.source = AxiStreamSource(
