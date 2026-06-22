@@ -112,7 +112,7 @@ def test_axis_rgmii_tx_py():
     proj_path = Path(__file__).resolve().parent.parent
 
     sources = [ 
-        proj_path / "rtl" / "axis_rgmii_tx.sv",
+        proj_path / "rtl" / "axis_gmii_tx.sv",
         ]
 
     runner = get_runner(sim)
@@ -123,19 +123,19 @@ def test_axis_rgmii_tx_py():
 
     runner.build(
         sources=sources,
-        hdl_toplevel="axis_rgmii_tx",
+        hdl_toplevel="axis_gmii_tx",
         parameters=parameters,
-        build_dir="sim_build/axis_rgmii_tx",
+        build_dir="sim_build/axis_gmii_tx",
         always=True,
         clean=True
         
     )
 
     runner.test(
-        hdl_toplevel="axis_rgmii_tx",
-        test_module="axis_rgmii_tx",
+        hdl_toplevel="axis_gmii_tx",
+        test_module="axis_gmii_tx",
         parameters=parameters,
-        build_dir="sim_build/axis_rgmii_tx",
+        build_dir="sim_build/axis_gmii_tx",
         
     )
 
