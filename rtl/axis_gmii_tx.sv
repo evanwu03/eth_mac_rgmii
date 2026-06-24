@@ -1,9 +1,11 @@
 
 
+
 module axis_gmii_tx #(
-    parameter  int DATA_W = 8,
+    parameter int DATA_W = 8,
     parameter int ENABLE_PADDING = 1,
-    parameter int MIN_FRAME_LENGTH = 64
+    parameter int MIN_FRAME_LENGTH = 64,
+    parameter int PADDING_EN = 1
 )(
     input wire logic i_clk,
     input wire logic i_rst_n,
@@ -36,8 +38,92 @@ module axis_gmii_tx #(
 );
 
 
-// To Temporarily pass tests, remove once logic is written
-assign s_axis_tready = 1'b1;
+// check configuration
+if (DATA_W != 8)
+    $fatal(0, "Error: Interface width must be 8 (instance %m)");
+
+
+
+typedef enum logic [7:0] {
+    ETH_PRE = 8'h55,
+    ETH_SFD = 8'hD5
+} eth_pre_t;
+
+
+typedef enum logic [2:0] {  
+    STATE_IDLE,
+    STATE_PREAMBLE,
+    STATE_PAYLOAD,
+    STATE_LAST,
+    STATE_PAD,
+    STATE_FCS,
+    STATE_IFG
+} state_t;
+
+
+// State register 
+state_t state_reg = STATE_IDLE, state_next;
+
+
+
+// Datapath control signals
+
+
+
+always_comb begin
+    
+
+    case (state_reg)
+        
+        STATE_IDLE: begin
+            
+
+        end
+
+        STATE_PREAMBLE: begin
+            
+
+        end
+
+        STATE_PAYLOAD: begin
+            
+        end
+
+
+        STATE_LAST: begin
+            
+
+        end
+
+        STATE_FCS: begin
+        
+        end
+
+
+        STATE_IFG: begin
+            
+        end
+
+
+        default: begin
+            state_next = STATE_IDLE;
+        end
+    endcase
+
+
+end
+
+
+
+always_ff @(posedge i_clk) begin
+    
+    // load next state this cycle 
+    state_reg <= state_next;
+
+end
+
 
 
 endmodule : axis_gmii_tx
+
+`resetall

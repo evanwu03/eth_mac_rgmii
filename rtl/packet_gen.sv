@@ -168,3 +168,5 @@ end
     `endif
 
 endmodule : packet_gen
+
+`resetall

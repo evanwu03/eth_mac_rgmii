@@ -164,6 +164,7 @@ async def run_good_packet_test(dut, payload_lengths=None, payload_data=None, ena
 def test_axis_gmii_runner():
     
     sim = os.getenv("SIM", "verilator")
+    
     proj_path = Path(__file__).resolve().parent.parent
 
     sources = [ 
